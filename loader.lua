@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
 local gameId = game.GameId
-local httpGet = game.httpGet
+local httpGet = game.HttpGet
 
 local allowed = false;
 
