@@ -21,7 +21,7 @@ end
 
 pcall(function()
     loadstring(game:HttpGet(
-        "",
+        "https://raw.githubusercontent.com/Viiiiice/v6/main/Modules/Games/testplace.lua",
         true
     ))()
 end)
