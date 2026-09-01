@@ -83,14 +83,57 @@ if game.PlaceId == 83538300074367 then
 
     local done = false
     local busy = false
-
+    local library = {};
 
     local repo = "https://raw.githubusercontent.com/Viiiiice/v6/main/"
-    local success, Library = pcall(function()
+    local success, LibraryM = pcall(function()
         return loadstring(game:HttpGet(repo .. "Modules/UILibrary/Library.lua", true))()
     end)
 
-    if Library then
-        warn(Library)
+    if success then
+        library = Library
+        shared.library = library
+
+        getgenv().Toggles = library.Toggles or {}
+        getgenv().Options = library.Options or {}
+        getgenv().Labels = library.Labels or {}
+
+        local SaveManager = loadstring(game:HttpGet(repo .. "Modules/UILibrary/SaveManager.lua"))()
+        local ThemeManager = loadstring(game:HttpGet(repo .. "Modules/UILibrary/ThemeManager.lua"))()
+
+        SaveManager:SetLibrary(library)
+        ThemeManager:SetLibrary(library)
+        SaveManager:IgnoreThemeSettings()
+
+        shared.SaveManager = SaveManager
+        shared.ThemeManager = ThemeManager
+    else
+        print("failed to load ui library")
+    end    
+
+    do
+        local Options = library.Options
+        local Toggles = library.Toggles
+
+        local window = library:CreateWindow({
+            Title = "v6",
+            NotifySide = "Left",
+            Footer = "",
+            Center = true,
+            AutoShow = false,
+            Resizable = true,
+            DisableSearch = false
+        })
+
+        local Tabs = {
+            Combat = window:AddTab("Combat", "sword"),
+            Visuals = window:AddTab("Visuals", "eye"),
+            World = window:AddTab("World", "globe"),
+            Exploits = window:AddTab("Exploits", "zap"),
+            Movement = window:AddTab("Movement", "wind"),
+            Misc = window:AddTab("Misc", "settings"),
+            Interface = window:AddTab("Interface", "monitor"),
+            Config = window:AddTab("Config", "save")
+        }
     end
 end
